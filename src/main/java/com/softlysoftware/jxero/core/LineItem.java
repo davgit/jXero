@@ -54,10 +54,15 @@ public class LineItem {
 	public double getTaxAmount(){return Formats.parseMoney(taxAmount);}
 	public void setTaxAmount(double taxAmount){this.taxAmount = Formats.formatMoney(taxAmount);}
 
-	@XmlElement(name = "LineAmount")
+	
 	private String lineAmount;
 	public double getLineAmount(){return Formats.parseMoney(lineAmount);}
 	public void setLineAmount(double lineAmount){this.lineAmount = Formats.formatMoney(lineAmount);}
+	
+	//the follow 2 methods are only for jaxb marshalling/unmarshalling. Please never explicitly call them.
+	@XmlElement(name = "LineAmount")
+	public Double getLineAmountForJaxb() {return null;}
+	public void setLineAmountForJaxb(Double lineAmountForJaxb) {this.setLineAmount(lineAmountForJaxb);}
 
 	@XmlElement(name = "DiscountRate")
 	private String discountRate;

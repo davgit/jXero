@@ -63,7 +63,7 @@ public class InvoiceTest {
         // Xero have a bug about how LineAmounts are calculated. 
         // The workaround would be to simply leave this item out of the XML when sending it back. 
         // Uncomment the following line when testing implementations of this workaround (some JAXB annotations tweak in LineItem.java?).
-        // assertFalse("LineAmount element shouldn't be present", xmlBounced.contains("<LineAmount>"));
+        assertFalse("LineAmount element shouldn't be present", xmlBounced.contains("<LineAmount>"));
 
         // doesn't work just yet as the order seems to change on the contact element
         //assertThat(XmlConverters.the(xml), XmlMatchers.isEquivalentTo(XmlConverters.the(xmlBounced)));
