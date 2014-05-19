@@ -1,6 +1,4 @@
 target
-src/test/resources/jxero.oauth.properties
-src/test/resources/jxero.oauth.pem
 .classpath
 .project
 .settings
