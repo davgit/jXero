@@ -18,98 +18,85 @@
  */
 package com.softlysoftware.jxero;
 
-import java.util.List;
 import java.util.LinkedList;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import com.softlysoftware.jxero.core.Contact;
-import com.softlysoftware.jxero.XeroClient;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+import com.softlysoftware.jxero.core.ManualJournal;
 
 /**
-* A simple wrapper for the list of Contact objects, to give the correct structure to the XML files.
+* A simple wrapper for the list of ManualJournal objects, to give the correct structure to the XML files.
 */
-@XmlRootElement(name = "Contacts")
+@XmlRootElement(name = "ManualJournals")
 @XmlAccessorType(XmlAccessType.NONE)
-public class ManualJournalEndpoint extends Endpoint {
+public class ManualJournalsEndpoint extends Endpoint {
 
-	private ManualJournalEndpoint() { }
+	private ManualJournalsEndpoint() { }
 
-	public ManualJournalEndpoint(XeroClient xeroClient) {this.xeroClient = xeroClient;}
+	public ManualJournalsEndpoint(XeroClient xeroClient) {this(); this.xeroClient = xeroClient;}
 
 	public String getRootElementName() {
-		return "Contacts";
+		return "ManualJournals";
 	}
 
 	/**
-	* When working with this wrapper directly, add the subordiate Contact objects to this list.
+	* When working with this wrapper directly, add the subordiate objects to this list.
 	*/
-	@XmlElement(name = "Contact")
-	public List<Contact> getList(){return list;}
-	public void setList(List<Contact> list){this.list = list;}
-	private List<Contact> list = new LinkedList<Contact>();
+	@XmlElement(name = "ManualJournal")
+	public List<ManualJournal> getList(){return list;}
+	public void setList(List<ManualJournal> list){this.list = list;}
+	private List<ManualJournal> list = new LinkedList<ManualJournal>();
 
 	/**
 	* The Xero maintained unique identifier. Will throw an exception if no match is found.
 	*/
-	public Contact getById(String id) {
+	public ManualJournal getById(String id) {
 		Response response = get(id, null);
-		return response.getContactsEndpoint().list.get(0);
+		return response.getManualJournalsEndpoint().list.get(0);
 	}
 
 	/**
-	* Grab contacts using any "where" filter. For example, getContactsWhere("FullyPaidOnDate >= DateTime(2011, 10, 01) AND FullyPaidOnDate <= DateTime(2011, 10, 30)");
+	* Grab manual journals using any "where" filter. 
 	* See <a href="http://developer.xero.com/documentation/getting-started/http-requests-and-responses/">the Xero documentation</a> for full details.
 	*/
-	public List<Contact> getContactsWhere(String where) {
+	public List<ManualJournal> getManualJournalsWhere(String where) {
 		Response response = getWhere(where);
-		if (response.getContactsEndpoint() == null) return new LinkedList<Contact>();
-		return response.getContactsEndpoint().getList();
+		if (response.getManualJournalsEndpoint() == null) return new LinkedList<ManualJournal>();
+		return response.getManualJournalsEndpoint().getList();
 	}
 
 	/**
-	* Like the generalised getContactsWhere, but for convenience when you expect just one object to be returned in the set.
+	* Like the generalised getManualJournalsWhere, but for convenience when you expect just one object to be returned in the set.
 	* Throws an exception when there's more than one match.
 	* @return If no match is found, returns null.
 	*/
-	public Contact getContactWhere(String where) {
-		List<Contact> contacts = getContactsWhere(where);
-		if (contacts.size() == 0) return null;
-		if (contacts.size() > 1) throw new RuntimeException("Multiple (" + contacts.size() + ") contacts matched : " + where);
-		return contacts.get(0);
+	public ManualJournal getManualJournalWhere(String where) {
+		List<ManualJournal> manualJournals = getManualJournalsWhere(where);
+		if (manualJournals.size() == 0) return null;
+		if (manualJournals.size() > 1) throw new RuntimeException("Multiple (" + manualJournals.size() + ") manual journals matched : " + where);
+		return manualJournals.get(0);
+	}
+
+
+	/**
+	* Either get a collection of ManualJournal objects, or build from scratch. Then call this method to update/add them to your Xero data.
+	*/
+	public List<ManualJournal> post(List<ManualJournal> manualJournals) {
+		list = manualJournals;
+		return post().getManualJournalsEndpoint().getList();
 	}
 
 	/**
-	* This is the unqiue identifier on your side.
+	* Grab a manualJournal via a get method, or build one from scratch to use this method to update/add it.
 	*/
-	public Contact getByNumber(String number) {
-		return getContactWhere("ContactNumber =  \"" + number + "\"");
-	}
-
-	/**
-	* I'm not sure if the email address is unique on the Xero side. If so, this should never cause a problem.
-	*/
-	public Contact getByEmailAddress(String email) {
-		return getContactWhere("EmailAddress =  \"" + email + "\"");
-	}
-
-	/**
-	* Either get a collection of Contact objects, or build from scratch. Then call this method to update/add them to your Xero data.
-	*/
-	public List<Contact> post(List<Contact> contacts) {
-		list = contacts;
-		return post().getContactsEndpoint().getList();
-	}
-
-	/**
-	* Grab a contact via a get method, or build one from scratch to use this method to update/add it.
-	*/
-	public Contact post(Contact contact) {
-		list = new LinkedList<Contact>();
-		list.add(contact);
-		return post().getContactsEndpoint().getList().get(0);
+	public ManualJournal post(ManualJournal manualJournal) {
+		list = new LinkedList<ManualJournal>();
+		list.add(manualJournal);
+		return post().getManualJournalsEndpoint().getList().get(0);
 	}
 
 }

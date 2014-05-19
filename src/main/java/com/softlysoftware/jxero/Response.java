@@ -59,7 +59,13 @@ public class Response extends Wrapper {
 	public ContactsEndpoint getContactsEndpoint() {return contactsEndpoint;}
 	public void setContactsEndpoint(ContactsEndpoint contactsEndpoint) {this.contactsEndpoint = contactsEndpoint;}
 	private ContactsEndpoint contactsEndpoint;
-
+	
+	
+	@XmlElement(name = "ManualJournals")	
+	public ManualJournalsEndpoint getManualJournalsEndpoint() {return manualJournalsEndpoint;}
+	public void setManualJournalsEndpoint(ManualJournalsEndpoint manualJournalsEndpoint) {this.manualJournalsEndpoint = manualJournalsEndpoint;}
+	private ManualJournalsEndpoint manualJournalsEndpoint;
+	
 	@XmlElement(name = "Invoices")
 	public InvoicesEndpoint getInvoicesEndpoint(){return invoicesEndpoint;}
 	public void setInvoicesEndpoint(InvoicesEndpoint invoicesEndpoint){this.invoicesEndpoint = invoicesEndpoint;}
