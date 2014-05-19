@@ -2,6 +2,7 @@ package com.softlysoftware.jxero;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
+import org.junit.Assert;
 
 import java.io.IOException;
 
@@ -30,6 +31,13 @@ public class ContactTest {
     	assertEquals("1111111", contact.getPhones().get(0).getPhoneNumber());
         String xmlBounced = Xml.toXml(contacts);
         assertThat(XmlConverters.the(xml), XmlMatchers.isEquivalentTo(XmlConverters.the(xmlBounced)));
+    }
+
+    @Test
+    public void testLookup() throws IOException {
+        XeroClient client = new XeroClient(true);
+        ContactsEndpoint contacts = new ContactsEndpoint(client);
+        Assert.assertEquals("ABC Furniture", contacts.getByEmailAddress("info@abfl.com").getName());
     }
 
 }
