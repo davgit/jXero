@@ -4,12 +4,14 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import com.softlysoftware.jxero.core.JournalLine;
 import com.softlysoftware.jxero.core.ManualJournal;
 
 @RunWith(JUnit4.class)
@@ -19,10 +21,26 @@ public class ManualJournalsTest {
     public void testFromXml() throws IOException {
     	String xml = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("ManualJournals.xml"), "UTF-8");
     	ManualJournalsEndpoint manualJournals = (ManualJournalsEndpoint)Xml.fromXml(xml, ManualJournalsEndpoint.class);
-    	assertEquals(2, manualJournals.getList().size());
+    	assertEquals(1, manualJournals.getList().size());
     	ManualJournal mj = manualJournals.getList().get(0);
+    	
+    	
     	assertEquals("Reversal: test-narration", mj.getNarration());
+    	assertEquals("POSTED", mj.getStatus().name());
     	assertTrue(mj.isShowOnCashBasisReports());
+    	assertEquals("NoTax", mj.getLineAmountTypes());
+    	assertEquals("bdf954e3-ef4d-44b9-8bb6-671a5facf975", mj.getId());
+    	
+    	
+    	List<JournalLine> journalLines = mj.getJournalLines();
+    	assertEquals(2, journalLines.size());
+    	JournalLine line = journalLines.get(0);
+    	assertEquals("320", line.getAccountCode());
+    	assertEquals("test-narration", line.getDescription());
+    	assertEquals(-123, new Double(line.getLineAmount()).intValue());
+    	assertEquals("NONE", line.getTaxType());
+    	 
+ 
     }
 
 }

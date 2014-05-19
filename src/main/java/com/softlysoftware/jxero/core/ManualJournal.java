@@ -19,11 +19,15 @@
 package com.softlysoftware.jxero.core;
 
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+ 
 
 /**
 * Xero's <a href="http://developer.xero.com/documentation/api/manual-journals/">Manual Journal record</a>.
@@ -31,18 +35,48 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "ManualJournal")
 @XmlAccessorType(XmlAccessType.NONE)
 public class ManualJournal {
+	
+	@XmlElement(name = "ManualJournalID")
+	private String id;
+	public String getId(){return id;}
+	public void setId(String id){this.id = id;}	
 
 	@XmlElement(name = "Narration")
 	private String narration;
 	public String getNarration(){return narration;}
 	public void setNarration(String narration){this.narration = narration;}
+
 	
+	@XmlElement(name = "LineAmountTypes")
+	private String lineAmountTypes;
+	public String getLineAmountTypes(){return lineAmountTypes;}
+	public void setLineAmountTypes(String lineAmountTypes){this.lineAmountTypes = lineAmountTypes;}	
 	
 	@XmlElement(name = "Date")
 	private String date;
 	public Date getDate(){return Formats.parseDate(date);}
 	public void setDate(Date date){this.date = Formats.formatDate(date);}
+
 	
+	@XmlElementWrapper(name = "JournalLines")
+	@XmlElement(name = "JournalLine")
+	private List<JournalLine> journalLines = new LinkedList<JournalLine>();
+	public List<JournalLine> getJournalLines(){return journalLines;}
+	public void setJournalLines(List<JournalLine> journalLines){this.journalLines = journalLines;}	
+	
+	public enum Status {DRAFT, POSTED, DELETED, VOIDED};
+	
+	@XmlElement(name = "Status")
+	private String status;
+	public Status getStatus(){
+		if (status == null) return null;
+		if (status.equals("DRAFT")) return Status.DRAFT;
+		if (status.equals("POSTED")) return Status.POSTED;
+		if (status.equals("DELETED")) return Status.DELETED;		
+		if (status.equals("VOIDED")) return Status.VOIDED;
+		throw new RuntimeException("Bad status : " + status);
+	}
+	public void setStatus(Status status){this.status = status.toString();}
 	
 
 	@XmlElement(name = "Url")

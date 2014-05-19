@@ -1,23 +1,28 @@
+
 <ManualJournals>
 	<ManualJournal>
 		<Date>2014-05-23T00:00:00</Date>
 		<Status>POSTED</Status>
 		<LineAmountTypes>NoTax</LineAmountTypes>
 		<UpdatedDateUTC>2014-05-19T12:08:46.96</UpdatedDateUTC>
-		<ManualJournalID>bdf954e3-ef4d-44b9-8bb6-671a5facf975
-		</ManualJournalID>
+		<ManualJournalID>bdf954e3-ef4d-44b9-8bb6-671a5facf975</ManualJournalID>
 		<Narration>Reversal: test-narration</Narration>
-		<ShowOnCashBasisReports>true</ShowOnCashBasisReports>
-	</ManualJournal>
-	<ManualJournal>
-		<Date>2014-05-19T00:00:00</Date>
-		<Status>POSTED</Status>
-		<LineAmountTypes>NoTax</LineAmountTypes>
-		<UpdatedDateUTC>2014-05-19T12:08:46.977</UpdatedDateUTC>
-		<ManualJournalID>0954ac41-dbcf-457a-a43b-ff865746a80f
-		</ManualJournalID>
-		<Narration>test-narration</Narration>
+		<JournalLines>
+			<JournalLine>
+				<Description>test-narration</Description>
+				<TaxType>NONE</TaxType>
+				<TaxAmount>0.00</TaxAmount>
+				<LineAmount>-123.00</LineAmount>
+				<AccountCode>320</AccountCode>
+			</JournalLine>
+			<JournalLine>
+				<Description>test-narration2</Description>
+				<TaxType>NONE</TaxType>
+				<TaxAmount>0.00</TaxAmount>
+				<LineAmount>123.00</LineAmount>
+				<AccountCode>620</AccountCode>
+			</JournalLine>
+		</JournalLines>
 		<ShowOnCashBasisReports>true</ShowOnCashBasisReports>
 	</ManualJournal>
 </ManualJournals>
- 
