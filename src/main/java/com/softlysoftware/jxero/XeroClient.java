@@ -140,5 +140,11 @@ public class XeroClient {
 	* Convenience method - just instantiates a new PaymentsEndpoint using this.
 	*/
 	public PaymentsEndpoint payments() {return new PaymentsEndpoint(this);}
+	
+	
+	/**
+	* Convenience method - just instantiates a new ManualJournalsEndpoint using this.
+	*/
+	public ManualJournalsEndpoint manualJournals() {return new ManualJournalsEndpoint(this);}	
 
 }
